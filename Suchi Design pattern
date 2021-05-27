@@ -1,0 +1,245 @@
+
+public class Main {
+
+    public static void main(String[] args) {
+
+Director m=new Director(new VegMealBuilder());
+
+      m.builder.getMeal().showitems();
+      System.out.println(m.builder.getMeal().totalprice());
+    Director m1=new Director(new NonVegMealBuilder());
+    m1.builder.getMeal().showitems();
+    System.out.println(m.builder.getMeal().totalprice());
+
+
+    }
+}
+public class Director {
+    public MealBuilderInterface builder;
+    public Director(MealBuilderInterface builder){
+    this.builder=builder;
+    }
+
+}
+
+
+public interface MealBuilderInterface {
+   void buildBurger();
+   void  buildDrink();
+   Meal  getMeal();
+}
+
+public class VegMealBuilder implements MealBuilderInterface{
+   private Meal meal;
+
+
+    VegMealBuilder(){
+        meal=new Meal();
+        buildBurger();
+        buildDrink();
+    }
+    public void buildBurger(){
+
+       burgers b=new burgers() {
+
+
+           @Override
+           public String getName() {
+               return this.name;
+           }
+
+           @Override
+            public void setName() {
+                this.name="Veg Burger";
+            }
+
+           @Override
+           public Double getPrice() {
+         return this.price;
+           }
+
+           @Override
+            public void setPrice() {
+              this.price =25.00;
+            }
+
+
+        };
+       b.setPrice();
+       b.setName();
+        meal.addItem(b);
+
+    }
+    public  void  buildDrink(){
+        Item c=new colddrinks() {
+
+            @Override
+            public String getName() {
+               return this.name;
+            }
+
+            @Override
+            public void setName() {
+                this.name="Coke";
+            }
+
+            @Override
+            public Double getPrice() {
+                   return this.price;
+            }
+
+            @Override
+            public void setPrice() {
+                this.price=30.0;
+            }
+        };
+        c.setName();
+        c.setPrice();
+        meal.addItem(c);
+    }
+    public Meal getMeal(){
+      return meal;
+
+    }
+}
+
+
+public class NonVegMealBuilder implements MealBuilderInterface{
+   private Meal meal;
+
+
+    NonVegMealBuilder(){
+        meal=new Meal();
+        buildBurger();
+        buildDrink();
+    }
+    public void buildBurger(){
+
+        burgers b=new burgers() {
+
+
+            @Override
+            public String getName() {
+                return this.name;
+            }
+
+            @Override
+            public void setName() {
+                this.name="NONVeg Burger";
+            }
+
+            @Override
+            public Double getPrice() {
+                return this.price;
+            }
+
+            @Override
+            public void setPrice() {
+                this.price =50.00;
+            }
+
+
+        };
+        b.setPrice();
+        b.setName();
+        meal.addItem(b);
+
+    }
+    public  void  buildDrink(){
+        Item c=new colddrinks() {
+
+            @Override
+            public String getName() {
+                return this.name;
+            }
+
+            @Override
+            public void setName() {
+                this.name="Pepsi";
+            }
+
+            @Override
+            public Double getPrice() {
+                return this.price;
+            }
+
+            @Override
+            public void setPrice() {
+                this.price=35.0;
+            }
+        };
+        c.setName();
+        c.setPrice();
+        meal.addItem(c);
+    }
+    public Meal getMeal(){
+        return meal;
+
+    }
+}
+
+
+import java.util.*;
+
+public class Meal {
+    List<Item> li;
+    public Meal() {
+       li = new ArrayList<>();
+    }
+
+    public void addItem(Item s){
+        li.add(s);
+
+    }
+    public void showitems(){
+        for(Item i: li){
+            System.out.println(i);
+        }
+    }
+    public Double totalprice(){
+        Double sum=0.0;
+        for(Item i: li) sum += i.getPrice();
+        return sum;
+    }
+
+
+
+}
+
+
+
+
+public interface Item {
+    String getName();
+    void setName();
+    Double getPrice();
+    void setPrice();
+    String pack();
+}
+
+abstract class burgers implements Item {
+public String name;
+public Double price;
+
+    public String pack() {
+        return "wrapper";
+    }
+    public String toString(){
+        return "item : "+name+" Packing : "+pack()+" price : "+price;
+    }
+
+}
+
+abstract class colddrinks  implements Item {
+    public String name;
+    public Double price;
+
+    public String pack(){
+        return "bottle";
+    }
+    public String toString(){
+        return "item : "+name+" Packing : "+pack()+" price : "+price ;
+    }
+
+}
+

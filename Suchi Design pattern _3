@@ -1,0 +1,83 @@
+  
+public class Main {
+
+    public static void main(String[] args) {
+ BasicCarCache.loadcache();
+   BasicCar model=BasicCarCache.gettype("1");
+  model.getprice();
+
+   BasicCar model1= BasicCarCache.gettype("2");
+model1.getprice();
+}
+}
+abstract class BasicCar implements  Cloneable {
+    private String name;
+     protected int price=9000000;
+
+     public void setprice(int a){
+         this.price=a;
+     }
+
+     abstract void getprice();
+     @Override
+     public  Object clone(){
+         Object clone=null;
+         try {
+             clone = super.clone();
+         }catch(Exception e){
+             e.printStackTrace();
+         }
+         finally{
+             return clone;
+         }
+     }
+
+}
+
+
+public class Nano extends BasicCar
+{
+    public Nano() {
+        super.setprice(189818);
+
+    }
+    public void getprice(){
+        System.out.println("The car is green Nano and its price is : Rs."+super.price);
+    }
+
+
+
+}
+
+public class Ford extends BasicCar
+{
+    public Ford() {
+        super.setprice(561925);
+
+    }
+    public void getprice(){
+        System.out.println("The car is Ford Yellow and its price is : Rs."+super.price);
+    }
+
+
+
+
+}
+
+
+import java.util.Hashtable;
+
+public class BasicCarCache {
+    private static Hashtable<String,BasicCar> m=new Hashtable<>();
+
+    public static BasicCar gettype(String a){
+        return  (BasicCar) m.get(a).clone();
+    }
+    public static void loadcache(){
+        BasicCar object =new Nano();
+        m.put("1",object);
+       BasicCar object1 =new Ford();
+        m.put("2",object1);
+    }
+}
+

@@ -1,0 +1,110 @@
+public class Main {
+    
+    public static void main(String[] args) {
+        System.out.println("***Abstract Factory Demo***");
+Factory c=new Factory("comedy");
+c.getmovienames();
+System.out.println();
+
+Factory c1=new Factory("Action");
+c1.getmovienames();
+    }
+}
+
+public class Factory {
+    private Bollywood bmovie;
+    private TollyWood tmovie;
+
+    public Factory(String s){
+
+        if(s.equalsIgnoreCase("comedy")) {
+           ComedyMovieFactory a = new ComedyMovieFactory();
+            bmovie =a.createbMovies();
+            tmovie=a.createtMovies();
+            System.out.println("The Comedy movies are :");
+        }else{
+            ActionMovieFactory b=new ActionMovieFactory();
+            bmovie=b.createbMovies();
+            tmovie=b.createtMovies();
+            System.out.println("The Action movies are :");
+        }
+
+    }
+
+    public void getmovienames(){
+
+        bmovie.getname();
+        tmovie.getname();
+    }
+}
+
+
+public class ComedyMovieFactory implements  MovieFactory{
+
+
+
+    @Override
+    public TollyWood createtMovies() {
+        return new TollyWoodComedyMovie();
+    }
+    @Override
+    public Bollywood createbMovies(){
+        return new BollyWoodComedyMovie();
+    }
+}
+
+public class ActionMovieFactory  implements  MovieFactory{
+
+
+    @Override
+    public TollyWood createtMovies() {
+        return new TollyWoodActionMovie();
+    }
+    @Override
+    public Bollywood createbMovies(){
+        return new BollyWoodActionMovie();
+    }
+}
+public interface MovieFactory   {
+    TollyWood createtMovies();
+   Bollywood createbMovies();
+
+}
+
+public interface Bollywood {
+
+    void getname();
+}
+
+public interface TollyWood {
+   void getname();
+}
+
+public class BollyWoodActionMovie implements  Bollywood{
+    @Override
+    public void getname() {
+        System.out.println("Bang Bang is a BollyWood Action Movie");
+    }
+}
+
+public class BollyWoodComedyMovie implements  Bollywood{
+    @Override
+    public void getname() {
+        System.out.println("Munn Bhai is a BollyWood Comedy Movie");
+    }
+}
+
+public class TollyWoodActionMovie implements  TollyWood {
+    @Override
+    public void getname() {
+        System.out.println( "Kranti is TollyWood Action Movie");
+    }
+}
+
+public class TollyWoodComedyMovie implements  TollyWood{
+    @Override
+    public void getname() {
+        System.out.println( "BasantaBilap is a TollyWood Comedy Movie ");
+    }
+}
+
